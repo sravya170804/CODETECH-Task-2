@@ -1,10 +1,25 @@
 # CODETECH-Task-2
+Name: Lakkireddy Sravya
+
+Company: CODETECH IT SOLUTIONS
+
+Domain: SQL
+
+Duration: September to October 2024
+
+Mentor: Neela Santhu Kumar
 
 Student Records Management System
 
 Project Overview
 
 This SQL-based project aims to design and implement a student records management system for educational institutions. The system enables administrators to store, manage, and analyze student data, courses, and enrollment information.
+
+Output:
+![sc1 of t2](https://github.com/user-attachments/assets/cdde1e69-eb76-49e6-993d-cba81b7cd6a3)
+![sc2 of t2](https://github.com/user-attachments/assets/6b04ec3c-5ce8-4a8d-a9d4-9c9f4cc848a4)
+![sc3 of t2](https://github.com/user-attachments/assets/82437391-4aa8-4354-86be-6888c28b3950)
+
 
 
 Key Features:
