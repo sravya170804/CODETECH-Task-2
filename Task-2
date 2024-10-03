@@ -1,0 +1,78 @@
+-- Create tables
+CREATE TABLE Students (
+  StudentID INT PRIMARY KEY,
+  FirstName VARCHAR(50) NOT NULL,
+  LastName VARCHAR(50) NOT NULL,
+  DateOfBirth DATE,
+  EmailAddress VARCHAR(100) UNIQUE
+);
+
+CREATE TABLE Courses (
+  CourseID INT PRIMARY KEY,
+  CourseName VARCHAR(100) NOT NULL,
+  Credits INT NOT NULL
+);
+
+CREATE TABLE Enrollments (
+  EnrollmentID INT PRIMARY KEY,
+  StudentID INT,
+  CourseID INT,
+  Grade VARCHAR(2),
+  AcademicTerm VARCHAR(20),
+  FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+  FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+
+-- Insert data
+INSERT INTO Students (StudentID, FirstName, LastName, DateOfBirth, EmailAddress)
+VALUES 
+  (1, 'Lakkireddy', 'Sravya', '2004-08-17', 'sravya.lakkireddy@example.com'),
+  (2, 'Madugula', 'Rajesh', '2003-12-03', 'rajesh.madugula@example.com');
+
+INSERT INTO Courses (CourseID, CourseName, Credits)
+VALUES 
+  (1, 'Computer Science', 3),
+  (2, 'Biology', 4),
+  (3, 'Literature', 3);
+
+INSERT INTO Enrollments (EnrollmentID, StudentID, CourseID, Grade, AcademicTerm)
+VALUES 
+  (1, 1, 1, 'A', 'Fall 2022'),
+  (2, 1, 2, 'B', 'Spring 2023'),
+  (3, 2, 3, 'A', 'Fall 2022');
+
+-- SQL queries to manage student records
+SELECT * FROM Students;
+SELECT * FROM Courses;
+SELECT * FROM Enrollments;
+
+-- Join students and enrollments
+SELECT Students.StudentID, Students.FirstName, Students.LastName, Enrollments.CourseID, Enrollments.Grade
+FROM Students
+INNER JOIN Enrollments ON Students.StudentID = Enrollments.StudentID;
+
+-- Join students, enrollments, and courses
+SELECT Students.StudentID, Students.FirstName, Students.LastName, Courses.CourseName, Enrollments.Grade
+FROM Students
+INNER JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+INNER JOIN Courses ON Enrollments.CourseID = Courses.CourseID;
+
+-- Calculate GPA
+SELECT Students.StudentID, Students.FirstName, Students.LastName, 
+AVG(CASE Enrollments.Grade 
+  WHEN 'A' THEN 4 
+  WHEN 'B' THEN 3 
+  WHEN 'C' THEN 2 
+  WHEN 'D' THEN 1 
+  WHEN 'F' THEN 0 
+END) AS GPA
+FROM Students
+INNER JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+GROUP BY Students.StudentID, Students.FirstName, Students.LastName;
+
+-- Get courses taken by a student
+SELECT Courses.CourseName
+FROM Students
+INNER JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+INNER JOIN Courses ON Enrollments.CourseID = Courses.CourseID
+WHERE Students.StudentID = 1;
